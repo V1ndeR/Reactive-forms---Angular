@@ -1,0 +1,31 @@
+.qq {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.hobbies {
+  margin: 0 auto;
+  padding: 5px;
+}
+
+.btn-hobbies {
+  margin-bottom: 15px;
+}
+
+.btn-send {
+  margin-top: 15px;
+}
+
+.validation {
+  color: red;
+  margin: 5px;
+}
+
+.hobby-valid {
+  display: flex;
+  justify-content: center;
+}

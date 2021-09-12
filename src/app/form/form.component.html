@@ -1,0 +1,126 @@
+<form class="mat-form-field qq" [formGroup]="form" (ngSubmit)="onAddUser()">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Имя</mat-label>
+      <input matInput name="firstName" [(ngModel)]="firstName" formControlName="firstname">
+      <div
+        *ngIf="form.get('firstname')?.invalid && form.get('firstname')?.touched"
+        class="validation"
+      >
+        <small *ngIf="form.get('firstname')?.errors?.required">Имя не может быть пустым</small>
+        <small *ngIf="form.get('firstname')?.errors?.minlength">
+          Количество символов должно быть не менее {{form.get('firstname')?.errors?.minlength.requiredLength}}.
+        </small>
+      </div>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Фамилия</mat-label>
+      <input matInput name="lastname" [(ngModel)]="lastName" formControlName="lastname">
+      <div
+        *ngIf="form.get('lastname')?.invalid && form.get('lastname')?.touched"
+        class="validation"
+      >
+        <small *ngIf="form.get('lastname')?.errors?.required">Поле не может быть пустым</small>
+        <small *ngIf="form.get('lastname')?.errors?.minlength">
+          Количество символов должно быть не менее {{form.get('lastname')?.errors?.minlength.requiredLength}}.
+        </small>
+      </div>
+    </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="День рождения" [matDatepicker]="myDatePicker" name="dateOfBirth" [(ngModel)]="dateOfBirth" formControlName="dateOfBirth">
+    <div
+      *ngIf="form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('dateOfBirth')?.errors?.required">Поле не может быть пустым</small>
+    </div>
+    <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #myDatePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Фреймворк</mat-label>
+    <mat-select (click)="clearSelectedVersion()" [(value)]="framework" formControlName="framework">
+      <mat-option *ngFor="let work of frWork" [value]="work.value">
+        {{work.value}}
+      </mat-option>
+    </mat-select>
+    <div
+      *ngIf="form.get('framework')?.invalid && form.get('framework')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('framework')?.errors?.required">Выберите Фреймворк</small>
+    </div>
+  </mat-form-field>
+  <mat-form-field *ngIf="showAngularVersion()" appearance="fill">
+    <mat-label>Версия</mat-label>
+    <mat-select [(value)]="frameworkVersion" formControlName="frameworkVersion">
+      <mat-option *ngFor="let a of angular" [value]="a.value">
+        {{a.value}}
+      </mat-option>
+    </mat-select>
+    <div
+      *ngIf="form.get('frameworkVersion')?.invalid && form.get('frameworkVersion')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('frameworkVersion')?.errors?.required">Выберите версию</small>
+    </div>
+  </mat-form-field>
+  <mat-form-field *ngIf="showReactVersion()" appearance="fill">
+    <mat-label>Версия</mat-label>
+    <mat-select [(value)]="frameworkVersion" formControlName="frameworkVersion">
+      <mat-option *ngFor="let r of react" [value]="r.value">
+        {{r.value}}
+      </mat-option>
+    </mat-select>
+    <div
+      *ngIf="form.get('frameworkVersion')?.invalid && form.get('frameworkVersion')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('frameworkVersion')?.errors?.required">Выберите версию</small>
+    </div>
+  </mat-form-field>
+  <mat-form-field *ngIf="showVueVersion()" appearance="fill">
+    <mat-label>Версия</mat-label>
+    <mat-select [(value)]="frameworkVersion" formControlName="frameworkVersion">
+      <mat-option *ngFor="let v of vue" [value]="v.value">
+        {{v.value}}
+      </mat-option>
+    </mat-select>
+    <div
+      *ngIf="form.get('frameworkVersion')?.invalid && form.get('frameworkVersion')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('frameworkVersion')?.errors?.required">Выберите версию</small>
+    </div>
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Емейл</mat-label>
+    <input matInput name="email" [(ngModel)]="email" formControlName="email">
+    <div
+      *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('email')?.errors?.required">Поле email не может быть пустым</small>
+      <small *ngIf="form.get('email')?.errors?.email">Введите корректный email</small>
+      <small *ngIf="form.get('email')?.errors?.uniqEmail">Такой email уже существует</small>
+    </div>
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Хобби</mat-label>
+    <input on matInput name="hobby" [(ngModel)]="hobby" formControlName="hobby">
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Как долго увлекаетесь?</mat-label>
+    <input matInput name="duration" [(ngModel)]="duration" formControlName="duration">
+  </mat-form-field>
+  <div
+    *ngIf="form.get('hobby')?.touched || form.get('hobby')?.touched"
+    class="validation"
+  >
+    <small class="hobby-valid" *ngIf="hobbies.length === 0">Добавите хотя бы одно хобби</small>
+  </div>
+  <button class="btn-hobbies" type="button" [disabled]="!validateAddHobby()" (click)="addHobby()" mat-raised-button color="primary">Добавить хобби</button>
+  <div class="hobbies" *ngFor="let h of hobbies">{{h.value}} {{h.duration}}</div>
+  <button class="btn-send" type="submit" [disabled]="!validateCheck()" mat-raised-button color="primary">Отправить</button>
+</form>
+
+
